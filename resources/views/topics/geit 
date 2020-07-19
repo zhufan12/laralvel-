@@ -1,0 +1,19 @@
+<?php
+$xmldata = <<<EOT
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <getSupportProvince xmlns="http://WebXml.com.cn/" />
+  </soap:Body>
+</soap:Envelope>
+EOT;
+$wsdl = 'http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?WSDL';
+try{
+    $client = new SoapClient($wsdl);
+    $result = $client->__doRequest($xmldata,$wsdl,'http://WebXml.com.cn/getSupportProvince',1,0);//发送xml必须使用__doRequest
+    var_dump($result);
+}catch (SoapFault $e){
+    echo $e->getMessage();
+}catch(Exception $e){
+    echo $e->getMessage();
+}
